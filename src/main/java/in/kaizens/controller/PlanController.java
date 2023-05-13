@@ -2,7 +2,7 @@ package in.kaizens.controller;
 
 import in.kaizens.entity.Plan;
 import in.kaizens.service.PlanService;
-import io.swagger.models.auth.In;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +20,14 @@ public class PlanController {
 
 
     @GetMapping("/category")
+    @Operation(description = "get plan category")
     public ResponseEntity<Map<Integer, String>> planCategory() {
         return new ResponseEntity<>(planService.getPlanCategory(), HttpStatus.OK);
     }
 
     @PostMapping("/plan")
-    public ResponseEntity<String> savePlan(Plan plan) {
+    @Operation(description = "save plan")
+    public ResponseEntity<String> savePlan(@RequestBody Plan plan) {
         boolean isSaved = planService.upsertPlan(plan);
         String msg;
         if (isSaved) {
@@ -36,18 +38,21 @@ public class PlanController {
         return new ResponseEntity<>(msg, HttpStatus.CREATED);
     }
 
-    @GetMapping("/plan")
+    @GetMapping("/plans")
+    @Operation(description = "get all plans")
     public ResponseEntity<List<Plan>> plans() {
         return new ResponseEntity<>(planService.getAllPlan(), HttpStatus.OK);
     }
 
     @GetMapping("/Plan/{planId}")
+    @Operation(description = "edit plan")
     public ResponseEntity<Plan> editPlan(@PathVariable Integer planId) {
         return new ResponseEntity<>(planService.getPlanById(planId), HttpStatus.OK);
     }
 
     @PutMapping("/plan")
-    public ResponseEntity<String> updatePlan(Plan plan) {
+    @Operation(description = "update plan")
+    public ResponseEntity<String> updatePlan(@RequestBody Plan plan) {
         boolean isUpdated = planService.upsertPlan(plan);
         String msg;
         if (isUpdated) {
@@ -59,6 +64,7 @@ public class PlanController {
     }
 
     @DeleteMapping("/plan/{planId}")
+    @Operation(description = "delete plan")
     public ResponseEntity<String> deletePlan(@PathVariable Integer planId) {
         boolean isDeleted = planService.deletePlanById(planId);
         String msg;
@@ -71,6 +77,7 @@ public class PlanController {
     }
 
     @PutMapping("/status-change/{planId}/{status}")
+    @Operation(description = "plan status change")
     public ResponseEntity<String> changeStatus(@PathVariable Integer planId, @PathVariable String status) {
         boolean isStatusChanges = planService.softDelete(planId, status);
         String msg;
