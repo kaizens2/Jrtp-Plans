@@ -1,0 +1,38 @@
+package in.kaizens.entity;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.util.Date;
+
+@Entity
+@Data
+@Table(name = "PLAN_MASTER")
+public class Plan {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "PLAN_ID")
+    private Integer planId;
+    @Column(name = "PLAN_NAME")
+    private String planName;
+    @Column(name = "PLAN_START_DATE")
+    private Date planStartDate;
+    @Column(name = "PLAN_END_DATE")
+    private Date planEndDate;
+    @Column(name = "ACTIVE_SW")
+    private String activeSw;
+    @Column(name = "PLAN_CATEGORY_ID")
+    private Integer planCategoryId;
+    @Column(name = "CREATED_BY")
+    private String createdBy;
+    @Column(name = "UPDATED_BY")
+    private String updatedBy;
+    @Column(name = "CREATED_DATE", updatable = false)
+    @UpdateTimestamp
+    private Date createdDate;
+    @Column(name = "UPDATED_DATE", insertable = false)
+    @UpdateTimestamp
+    private Date UpdatedDate;
+}
