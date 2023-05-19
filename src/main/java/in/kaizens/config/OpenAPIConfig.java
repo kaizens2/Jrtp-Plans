@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class OpenAPIConfig {
 
     @Bean
-    public OpenAPI openApi(){
+    public OpenAPI openApi() {
         return new OpenAPI().info(new Info().title("PLAN-API").description("Create Project for Different types of plan with category").version("v1").contact(new Contact().name("Ronak chaudhary").email("chaudharyronak291@gmail.com")));
     }
 }

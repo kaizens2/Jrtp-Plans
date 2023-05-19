@@ -1,8 +1,9 @@
 package in.kaizens.controller;
 
+import in.kaizens.constants.AppConstants;
 import in.kaizens.entity.Plan;
+import in.kaizens.props.AppProperties;
 import in.kaizens.service.PlanService;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,78 +14,74 @@ import java.util.Map;
 @RestController
 public class PlanController {
     private final PlanService planService;
+    private Map<String, String> message;
 
-    public PlanController(PlanService planService) {
+    public PlanController(PlanService planService, AppProperties appProperties) {
+
         this.planService = planService;
+        this.message = appProperties.getMessage();
     }
 
 
     @GetMapping("/category")
-    @Operation(description = "get plan category")
     public ResponseEntity<Map<Integer, String>> planCategory() {
         return new ResponseEntity<>(planService.getPlanCategory(), HttpStatus.OK);
     }
 
     @PostMapping("/plan")
-    @Operation(description = "save plan")
     public ResponseEntity<String> savePlan(@RequestBody Plan plan) {
         boolean isSaved = planService.upsertPlan(plan);
-        String msg;
+        String msg = AppConstants.EMP_STR;
         if (isSaved) {
-            msg = "Plan Saved";
+            msg = message.get(AppConstants.PLAN_SAVE_SUCC);
         } else {
-            msg = "Plan Not Saved";
+            msg = message.get(AppConstants.PLAN_SAVE_FAIL);
         }
         return new ResponseEntity<>(msg, HttpStatus.CREATED);
     }
 
     @GetMapping("/plans")
-    @Operation(description = "get all plans")
     public ResponseEntity<List<Plan>> plans() {
         return new ResponseEntity<>(planService.getAllPlan(), HttpStatus.OK);
     }
 
     @GetMapping("/Plan/{planId}")
-    @Operation(description = "edit plan")
     public ResponseEntity<Plan> editPlan(@PathVariable Integer planId) {
         return new ResponseEntity<>(planService.getPlanById(planId), HttpStatus.OK);
     }
 
     @PutMapping("/plan")
-    @Operation(description = "update plan")
     public ResponseEntity<String> updatePlan(@RequestBody Plan plan) {
         boolean isUpdated = planService.upsertPlan(plan);
-        String msg;
+        String msg = AppConstants.EMP_STR;
         if (isUpdated) {
-            msg = "Plan Updated";
+            msg = message.get(AppConstants.PLAN_UPDATE_SUCC);
         } else {
-            msg = "Plan Not Updated";
+            msg = message.get(AppConstants.PLAN_UPDATE_FAIL);
         }
         return new ResponseEntity<>(msg, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/plan/{planId}")
-    @Operation(description = "delete plan")
     public ResponseEntity<String> deletePlan(@PathVariable Integer planId) {
         boolean isDeleted = planService.deletePlanById(planId);
-        String msg;
+        String msg = AppConstants.EMP_STR;
         if (isDeleted) {
-            msg = "Plan Deleted";
+            msg = message.get(AppConstants.PLAN_DELETE_SUCC);
         } else {
-            msg = "Plan Not Deleted";
+            msg = message.get(AppConstants.PLAN_DELETE_FAIL);
         }
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
     @PutMapping("/status-change/{planId}/{status}")
-    @Operation(description = "plan status change")
     public ResponseEntity<String> changeStatus(@PathVariable Integer planId, @PathVariable String status) {
         boolean isStatusChanges = planService.softDelete(planId, status);
-        String msg;
+        String msg = AppConstants.EMP_STR;
         if (isStatusChanges) {
-            msg = "Status Changed";
+            msg = message.get(AppConstants.PLAN_STATUS_CHANGE);
         } else {
-            msg = "Status Not Changed";
+            msg = message.get(AppConstants.PLAN_STATUS_CHANGE_FAIL);
         }
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }

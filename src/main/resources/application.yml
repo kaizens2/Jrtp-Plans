@@ -1,0 +1,37 @@
+#DB Config
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/jrtp
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+
+  #JPA Config
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+# Message for Plan API
+plan-api:
+  message:
+    planSaveSucc: Plan Saved Successfully
+    planSaveFail: Plan Not Saved
+    planUpdateSucc: Plan Updated Successfully
+    planUpdateFail: Plan Not Updated
+    planDeleteSucc: Plan Deleted Successfully
+    planDeleteFail: Plan Not Deleted
+    planStatusChange: Plan Status Changed
+    planStatusChangeFail: Plan Status Not Changed
+    planCategorySaveSucc: Plan Category Saved Successfully
+    planCategorySaveFail: Plan Category Not Saved
+    planCategoryUpdateSucc: Plan Category Updated Successfully
+    planCategoryUpdateFail: Plan Category Not Updated
+    planCategoryDeleteSucc: Plan Category Deleted Successfully
+    planCategoryDeleteFail: Plan Category Not Deleted
+    planCategoryStatusChange: Plan Category Status Changed
+    planCategoryStatusChangeFail: Plan Category Status Not Changed
+
+
