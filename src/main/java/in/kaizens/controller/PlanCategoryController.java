@@ -23,7 +23,7 @@ public class PlanCategoryController {
         String msg = AppConstants.EMP_STR;
         boolean isSaved = planCategoryService.upsert(planCategory);
         msg = isSaved ? AppConstants.PLAN_CATEGORY_SAVE_SUCC : AppConstants.PLAN_CATEGORY_SAVE_FAIL;
-        return new ResponseEntity<>(msg, HttpStatus.OK);
+        return new ResponseEntity<>(msg, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
@@ -31,7 +31,7 @@ public class PlanCategoryController {
         String msg = AppConstants.EMP_STR;
         boolean isSaved = planCategoryService.upsert(planCategory);
         msg = isSaved ? AppConstants.PLAN_CATEGORY_UPDATE_SUCC : AppConstants.PLAN_CATEGORY_UPDATE_FAIL;
-        return new ResponseEntity<>(msg, HttpStatus.OK);
+        return new ResponseEntity<>(msg, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/planCategory/{categoryId}")
